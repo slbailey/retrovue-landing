@@ -254,24 +254,19 @@
       No scrolling. No algorithms. Just turn it on.
     </p>
 
-<form class="signup-form"
-      id="signup-form"
-      action="https://rsmw.activehosted.com/proc.php"
-      method="POST">
-
-  <input type="email" name="email" placeholder="your@email.com" required>
-  <button type="submit">Notify Me</button>
-
-  <!-- REQUIRED ActiveCampaign hidden fields -->
-  <input type="hidden" name="u" value="rsmw">
-  <input type="hidden" name="f" value="1">
-  <input type="hidden" name="s">
-  <input type="hidden" name="c" value="0">
-  <input type="hidden" name="m" value="0">
-  <input type="hidden" name="act" value="sub">
-  <input type="hidden" name="v" value="2">
-
-</form>
+    <form id="_form_1_" class="signup-form">
+      <input type="hidden" name="u" value="1">
+      <input type="hidden" name="f" value="1">
+      <input type="hidden" name="s">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="v" value="2">
+      <input type="hidden" name="or" value="3600ff9a-b92c-4463-8d44-2847c8a3ab75">
+    
+      <input type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit">Notify Me</button>
+    </form>
 
     <p class="success-message" id="success-msg">
       ✓ You're on the list. Stay tuned.
@@ -283,16 +278,20 @@
   </div>
 
   <script>
-    document.getElementById('signup-form').addEventListener('submit', function(e) {
+    document.getElementById('_form_1_').addEventListener('submit', function(e) {
+      e.preventDefault();
     
-      // let form submit normally
-      setTimeout(() => {
-        this.style.display = 'none';
-        document.getElementById('success-msg').style.display = 'block';
-      }, 300);
+      const form = this;
+      const params = new URLSearchParams(new FormData(form)).toString();
     
+      const script = document.createElement('script');
+      script.src = 'https://rsmw.activehosted.com/proc.php?' + params + '&jsonp=true';
+    
+      document.body.appendChild(script);
+    
+      form.style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
     });
-
   </script>
 </body>
 </html>
