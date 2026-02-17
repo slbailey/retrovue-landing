@@ -254,10 +254,24 @@
       No scrolling. No algorithms. Just turn it on.
     </p>
 
-    <form class="signup-form" id="signup-form">
-      <input type="email" name="email" placeholder="your@email.com" required>
-      <button type="submit">Notify Me</button>
-    </form>
+<form class="signup-form"
+      id="signup-form"
+      action="https://rsmw.activehosted.com/proc.php"
+      method="POST">
+
+  <input type="email" name="email" placeholder="your@email.com" required>
+  <button type="submit">Notify Me</button>
+
+  <!-- REQUIRED ActiveCampaign hidden fields -->
+  <input type="hidden" name="u" value="rsmw">
+  <input type="hidden" name="f" value="1">
+  <input type="hidden" name="s">
+  <input type="hidden" name="c" value="0">
+  <input type="hidden" name="m" value="0">
+  <input type="hidden" name="act" value="sub">
+  <input type="hidden" name="v" value="2">
+
+</form>
 
     <p class="success-message" id="success-msg">
       ✓ You're on the list. Stay tuned.
@@ -269,28 +283,16 @@
   </div>
 
   <script>
-    // ActiveCampaign form handler
-    // Replace YOUR_AC_FORM_ACTION with your ActiveCampaign form action URL
-    const AC_FORM_ACTION = 'https://rsmw.activehosted.com/proc.php';
-
     document.getElementById('signup-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = this.querySelector('input[type="email"]').value;
-
-      // If ActiveCampaign is configured, submit via their API
-      if (AC_FORM_ACTION !== 'https://rsmw.activehosted.com/proc.php') {
-        fetch(AC_FORM_ACTION, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: 'email=' + encodeURIComponent(email),
-          mode: 'no-cors'
-        });
-      }
-
-      // Show success
-      this.style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
+    
+      // let form submit normally
+      setTimeout(() => {
+        this.style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+      }, 300);
+    
     });
+
   </script>
 </body>
 </html>
