@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Something's Broadcasting Soon</title>
+  <meta name="description" content="Your streaming library, scheduled like a real TV station. Coming soon.">
+  <meta property="og:title" content="Something's Broadcasting Soon">
+  <meta property="og:description" content="Your streaming library, scheduled like a real TV station. No scrolling. No algorithms. Just turn it on.">
+  <meta property="og:image" content="hero.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Something's Broadcasting Soon">
+  <meta name="twitter:description" content="Your streaming library, scheduled like a real TV station. No scrolling. No algorithms. Just turn it on.">
+  <meta name="twitter:image" content="hero.jpg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Oswald:wght@400;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #e0e0e0;
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* CRT scan lines overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.15) 2px,
+        rgba(0, 0, 0, 0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Subtle screen flicker */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10, 10, 10, 0);
+      pointer-events: none;
+      z-index: 99;
+      animation: flicker 8s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.02; }
+      50.5% { opacity: 0.04; }
+      51% { opacity: 0; }
+    }
+
+    /* Subtle vignette */
+    .vignette {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    .hero-container {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 0;
+    }
+
+    .hero-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      filter: saturate(0.6) contrast(1.1);
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      max-width: 640px;
+    }
+
+    /* Color bars accent */
+    .color-bars {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 3rem;
+      height: 4px;
+      width: 200px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .color-bars span {
+      flex: 1;
+      height: 100%;
+    }
+
+    .bar-white { background: #c0c0c0; }
+    .bar-yellow { background: #c0c000; }
+    .bar-cyan { background: #00c0c0; }
+    .bar-green { background: #00c000; }
+    .bar-magenta { background: #c000c0; }
+    .bar-red { background: #c00000; }
+    .bar-blue { background: #0000c0; }
+
+    h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 40px rgba(255,255,255,0.1);
+    }
+
+    .tagline {
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto 2rem;
+    }
+
+    .signup-form input[type="email"] {
+      flex: 1;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-right: none;
+      border-radius: 6px 0 0 6px;
+      color: #fff;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .signup-form input[type="email"]::placeholder {
+      color: #555;
+    }
+
+    .signup-form input[type="email"]:focus {
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    .signup-form button {
+      padding: 14px 24px;
+      background: #c00000;
+      border: 1px solid #c00000;
+      border-radius: 0 6px 6px 0;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .signup-form button:hover {
+      background: #e00000;
+    }
+
+    .success-message {
+      display: none;
+      color: #00c000;
+      font-size: 0.9rem;
+      margin-top: -1rem;
+      margin-bottom: 2rem;
+    }
+
+    .bottom-text {
+      font-size: 0.75rem;
+      color: #444;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .blink {
+      animation: blink 1.5s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .signup-form {
+        flex-direction: column;
+        gap: 0;
+      }
+      .signup-form input[type="email"] {
+        border-right: 1px solid rgba(255,255,255,0.15);
+        border-radius: 6px 6px 0 0;
+        border-bottom: none;
+      }
+      .signup-form button {
+        border-radius: 0 0 6px 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="vignette"></div>
+
+  <div class="hero-container">
+    <img src="hero.jpg" alt="">
+  </div>
+
+  <div class="content">
+    <div class="color-bars">
+      <span class="bar-white"></span>
+      <span class="bar-yellow"></span>
+      <span class="bar-cyan"></span>
+      <span class="bar-green"></span>
+      <span class="bar-magenta"></span>
+      <span class="bar-red"></span>
+      <span class="bar-blue"></span>
+    </div>
+
+    <h1>Something's Broadcasting Soon</h1>
+
+    <p class="tagline">
+      Your streaming library. Scheduled like a real TV station.<br>
+      No scrolling. No algorithms. Just turn it on.
+    </p>
+
+    <form class="signup-form" id="signup-form">
+      <input type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit">Notify Me</button>
+    </form>
+
+    <p class="success-message" id="success-msg">
+      ✓ You're on the list. Stay tuned.
+    </p>
+
+    <p class="bottom-text">
+      <span class="blink">▮</span> Stand by for transmission
+    </p>
+  </div>
+
+  <script>
+    // ActiveCampaign form handler
+    // Replace YOUR_AC_FORM_ACTION with your ActiveCampaign form action URL
+    const AC_FORM_ACTION = 'YOUR_AC_FORM_ACTION';
+
+    document.getElementById('signup-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = this.querySelector('input[type="email"]').value;
+
+      // If ActiveCampaign is configured, submit via their API
+      if (AC_FORM_ACTION !== 'YOUR_AC_FORM_ACTION') {
+        fetch(AC_FORM_ACTION, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'email=' + encodeURIComponent(email),
+          mode: 'no-cors'
+        });
+      }
+
+      // Show success
+      this.style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
