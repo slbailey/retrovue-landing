@@ -271,14 +271,14 @@
   <script>
     // ActiveCampaign form handler
     // Replace YOUR_AC_FORM_ACTION with your ActiveCampaign form action URL
-    const AC_FORM_ACTION = 'YOUR_AC_FORM_ACTION';
+    const AC_FORM_ACTION = 'https://rsmw.activehosted.com/f/1';
 
     document.getElementById('signup-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const email = this.querySelector('input[type="email"]').value;
 
       // If ActiveCampaign is configured, submit via their API
-      if (AC_FORM_ACTION !== 'YOUR_AC_FORM_ACTION') {
+      if (AC_FORM_ACTION !== 'https://rsmw.activehosted.com/f/1') {
         fetch(AC_FORM_ACTION, {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
